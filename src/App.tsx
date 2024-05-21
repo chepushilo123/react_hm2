@@ -1,13 +1,22 @@
-import { useState } from "react";
+import { useState, createContext } from "react";
 import Admin from "./components/admin/Admin";
 import Modal from "./components/modal/Modal";
 import User from "./components/user/User";
 import ModalButton from "./components/modalButton/ModalButton";
 import Search from "./components/search/search";
+import Statistics from "./components/statistics/Statistic";
+
+
+
+
+export const Context = createContext(null);
+
 
 function App() {
 
 
+  
+  const [move, setMove] = useState(0);
   const [guest, setGuest] = useState("admin");
   const [textValue, setTextValue] = useState("");
 
@@ -36,15 +45,23 @@ function App() {
 
 
 
-
+  const value: any = {
+    post,
+    textValue,
+    move,
+    setMove
+  };
 
   if (guest === "user" || guest === "admin") {
     return (
       <>
-        {guest === "admin" ? <Admin post={post} setPost={setPost} /> : ""}
-        {guest === "user" ? (<Search post={post} textValue={textValue} setTextValue={setTextValue}/>) : ("")}
-        <ModalButton guest={guest} setGuest={setGuest} />
-        <User post={post} setPost={setPost} textValue={textValue} guest={guest} />
+        <Context.Provider value={value}>
+          {guest === "admin" ? <Admin setPost={setPost} /> : ""}
+          {guest === "user" ? (<Search setTextValue={setTextValue}/>) : ("")}
+          <ModalButton guest={guest} setGuest={setGuest} />
+          <User setPost={setPost} guest={guest} />
+          <Statistics />
+        </Context.Provider>
       </>
     );
   } else {

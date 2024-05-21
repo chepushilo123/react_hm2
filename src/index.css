@@ -115,3 +115,18 @@ p {
   height: 30px;
   margin: 10px;
 }
+
+.statistic {
+  display: block;
+
+  width: 100%;
+  height: 50px;
+  text-align: center;
+  border: 1px solid black;
+  color: black;
+}
+
+.def {
+  color: black;
+  position: relative;
+}

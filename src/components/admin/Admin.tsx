@@ -1,9 +1,17 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { Context } from "../../App";
+
+
+
 
 export default function Admin(props: any) {
   const [name, setName] = useState("");
   const [description, setDescriptoin] = useState("");
   const [index, setIndex] = useState("");
+
+  const value: any = useContext(Context);
+  console.log(value)
+
 
   const handlerName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -20,14 +28,17 @@ export default function Admin(props: any) {
   const createPost = () => {
     let checkIndex = false;
 
-    props.post.map((item: any) => {
+    value.post.map((item: any) => {
       item.key == Number(index) && checkIndex != false ? (checkIndex = false) : (checkIndex = true);
     });
 
     if (checkIndex != false) {
-      props.setPost([...props.post, { title: name, text: description, key: index },]);
+      props.setPost([...value.post, { title: name, text: description, key: index },]);
+      value.setMove(value.move + 1)
       checkIndex = false;
     }
+
+
   };
 
   return (
